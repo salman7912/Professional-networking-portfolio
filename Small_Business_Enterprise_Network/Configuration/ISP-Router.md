@@ -26,8 +26,3 @@ show ip interface brief
 show ip route
 ping 203.0.113.2
 ```
-
-## Notes
-
-- R1-Firewall needs a default route pointing to `203.0.113.1` to reach the Internet (`8.8.8.8`).
-- Passwords are not encrypted and no console/VTY password is set.
