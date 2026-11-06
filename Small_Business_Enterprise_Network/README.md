@@ -10,7 +10,7 @@ The infrastructure uses VLAN segmentation, a multilayer switch, access switches,
 
 ## Network Topology
 
-![Small Business Enterprise Network](Small_Business_Enterprise_Networkimagesnetwork-topology.png)
+![Small Business Enterprise Network](Small_Business_Enterprise_Network/images/Network-topology.png)
 
 ## Network Design
 
