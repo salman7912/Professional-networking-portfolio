@@ -145,7 +145,7 @@ Bank-Branch-Network/
 
 1. Clone the repository
    ```bash
-   git clone https://github.com/salman7912/Bank-Branch-Network.git
+   git clone https://github.com/salman7912/Professional-networking-portfolio/Bank_Branch_Network.git
    ```
 2. Open `Bank_Branch_Network.pkt` with Cisco Packet Tracer.
 3. Check the device configurations in the `Configurations/` folder.
