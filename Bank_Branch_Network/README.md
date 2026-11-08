@@ -1,12 +1,12 @@
 
-# 🏦 Bank Branch Network
+# Bank Branch Network
 
 
 A multi-branch bank network designed and simulated in **Cisco Packet Tracer**. It has a Head Office (HQ) with dual ISP failover, a DMZ, a server network, and three branches (Chittagong, Sylhet, Rajshahi), each segmented into Staff, ATM and Guest VLANs.
 
 ---
 
-## 📐 Topology
+## Topology
 
 | Item | Details |
 |------|---------|
