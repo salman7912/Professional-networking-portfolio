@@ -1,7 +1,6 @@
 
 # 🏦 Bank Branch Network
 
-**Secure | Scalable | Highly Available | Multi-Branch Architecture**
 
 A multi-branch bank network designed and simulated in **Cisco Packet Tracer**. It has a Head Office (HQ) with dual ISP failover, a DMZ, a server network, and three branches (Chittagong, Sylhet, Rajshahi), each segmented into Staff, ATM and Guest VLANs.
 
@@ -154,4 +153,4 @@ Bank-Branch-Network/
 
 ## 👤 Author
 
-**Md. Salman Farsi** - [GitHub](https://github.com/salman7912)
+**Md. Salman Farsi** - [GitHub](https://github.com/salman7912/Professional-networking-portfolio)
