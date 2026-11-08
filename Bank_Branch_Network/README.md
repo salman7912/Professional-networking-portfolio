@@ -20,7 +20,7 @@ A multi-branch bank network designed and simulated in **Cisco Packet Tracer**. I
 
 ### Topology Summary
 
-- **Internet edge:** ISP-1 and ISP-2 connect to the edge routers (R1 / Core-RTR1 and R2 / Core-RTR2) for dual ISP failover.
+- **Internet edge:** ISP-1 and ISP-2 connect to the edge routers (Core-RTR1 and Core-RTR2) for dual ISP failover.
 - **Core layer:** Two multilayer switches (SW1 and SW2) are joined by an EtherChannel (Port-Channel1). HSRP provides a virtual gateway (10.10.0.1).
 - **DMZ:** Web and Mail servers are placed behind Switch4.
 - **Server network:** DB, App and Backup servers are placed behind Switch5.
@@ -90,7 +90,7 @@ Device configurations are stored in the [`Configurations/`](Configurations/) fol
 
 | Folder | Contents |
 |--------|----------|
-| [`Configurations/HQ/`](Configurations/HQ/) | Edge routers, core switches and ISP routers |
+| [`Configurations/HQ//`](Configurations/HQ/) | Edge routers, core switches and ISP routers |
 | [`Configurations/Branches/`](Configurations/Branches/) | Branch routers and switches (Chittagong, Sylhet, Rajshahi) |
 | [`Configurations/Servers/`](Configurations/Servers/) | DMZ and server network settings |
 
@@ -136,7 +136,7 @@ Bank-Branch-Network/
 | File / Folder | Description |
 |---------------|-------------|
 | `README.md` | Project documentation |
-| `Topology.pkt` | Cisco Packet Tracer topology file |
+| `Bank_Branch_Network.pkt` | Cisco Packet Tracer topology file |
 | `Configurations/` | Device configuration files |
 | `Documentation/` | Reports and extra documents |
 | `Screenshots/` | Topology and test screenshots |
@@ -145,9 +145,9 @@ Bank-Branch-Network/
 
 1. Clone the repository
    ```bash
-   git clone https://github.com/<your-username>/Bank-Branch-Network.git
+   git clone https://github.com/salman7912/Bank-Branch-Network.git
    ```
-2. Open `Topology.pkt` with Cisco Packet Tracer.
+2. Open `Bank_Branch_Network.pkt` with Cisco Packet Tracer.
 3. Check the device configurations in the `Configurations/` folder.
 4. Test connectivity with `ping` and `tracert` between branches, HQ and servers.
 
