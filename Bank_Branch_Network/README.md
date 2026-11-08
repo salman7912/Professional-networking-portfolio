@@ -11,7 +11,7 @@ A multi-branch bank network designed and simulated in **Cisco Packet Tracer**. I
 | Item | Details |
 |------|---------|
 | Tool | Cisco Packet Tracer |
-| Topology file | [`Topology.pkt`](Topology.pkt) |
+| Topology file | [`Topology.pkt`](Bank_Branch_Network.pkt) |
 | Screenshots | [`Screenshots/`](Screenshots/) |
 
 ![Topology](Screenshots/topology.png)
