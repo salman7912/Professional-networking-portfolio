@@ -180,3 +180,7 @@ END
 ## 👤 Author
 
 **Md. Salman Farsi** - [GitHub](https://github.com/salman7912/Professional-networking-portfolio)
+
+## Project Status
+
+In Progress
