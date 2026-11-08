@@ -90,7 +90,7 @@ Device configurations are stored in the [`Configurations/`](Configurations/) fol
 
 | Folder | Contents |
 |--------|----------|
-| [`Configurations/HQ//`](Configurations/HQ/) | Edge routers, core switches and ISP routers |
+| [`Configurations/HQ/`](Configurations/HQ/) | Core routers and Core switches |
 | [`Configurations/Branches/`](Configurations/Branches/) | Branch routers and switches (Chittagong, Sylhet, Rajshahi) |
 | [`Configurations/Servers/`](Configurations/Servers/) | DMZ and server network settings |
 
@@ -123,14 +123,40 @@ Device configurations are stored in the [`Configurations/`](Configurations/) fol
 
 ```
 Bank-Branch-Network/
+│
+├── Configurations/
+├── Screenshots/
+├──Bank_Branch_Network.pkt/
 ├── README.md
-├── Topology.pkt
+│
+│
 ├── Configurations/
 │   ├── HQ/
+│   │   ├── Multilayer-Switch1.md
+│   │   ├── Multilayer-Switch2.md
+│   │   ├── Core-Router1.md
+│   │   └── Core-Router2.md
+│   │
 │   ├── Branches/
+│   │   ├── CTG/
+│   │   │   ├── Branch1-Router.md
+│   │   │   └── Switch1.md
+│   │   │
+│   │   ├── SYL/
+│   │   │   ├── Branch2-Router.md
+│   │   │   └── Switch2.md
+│   │   │
+│   │   └── RAJ/
+│   │       ├── Branch3-Router.md
+│   │       └── Switch3.md
+│   │
 │   └── Servers/
-├── Documentation/
-└── Screenshots/
+│       ├── Web-Server.md
+│       ├── Mail-Server.md
+│       ├── DB-Server.md
+│       ├── App-Server.md
+│       └── Backup-Server.md
+
 ```
 
 | File / Folder | Description |
