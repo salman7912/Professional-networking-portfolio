@@ -63,7 +63,7 @@ A multi-branch bank network designed and simulated in **Cisco Packet Tracer**. I
 | 30 | Guest | 10.20.30.0/24 | 10.30.30.0/24 | 10.40.30.0/24 |
 
 ---
-## 🖧 Network Devices
+## Network Devices
 
 | Device | Role | Location |
 |--------|------|----------|
@@ -85,7 +85,7 @@ A multi-branch bank network designed and simulated in **Cisco Packet Tracer**. I
 
 ---
 
-## ⚙️ Configuration Documentation
+## Configuration Documentation
 
 Device configurations are stored in the [`Configurations/`](Configurations/) folder.
 
@@ -107,7 +107,7 @@ Device configurations are stored in the [`Configurations/`](Configurations/) fol
 - EtherChannel (Link Aggregation)
 - DHCP (Auto IP)
 
-## 🛠️ Technologies Used
+## Technologies Used
 
 - Cisco Packet Tracer
 - OSPFv2
@@ -120,7 +120,7 @@ Device configurations are stored in the [`Configurations/`](Configurations/) fol
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 Bank-Branch-Network/
@@ -142,7 +142,7 @@ Bank-Branch-Network/
 | `Documentation/` | Reports and extra documents |
 | `Screenshots/` | Topology and test screenshots |
 
-## 🚀 How to Use
+## How to Use
 
 1. Clone the repository
    ```bash
@@ -154,4 +154,4 @@ Bank-Branch-Network/
 
 ## 👤 Author
 
-**Your Name** - [GitHub](https://github.com/<your-username>)
+**Md. Salman Farsi** - [GitHub](https://github.com/salman7912)
