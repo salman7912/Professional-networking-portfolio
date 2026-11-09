@@ -126,7 +126,8 @@ Bank-Branch-Network/
 │
 ├── Configurations/
 ├── Screenshots/
-├──Bank_Branch_Network.pkt/
+├── Topology/
+│   └── Bank-Branch-Network.pkt
 ├── README.md
 │
 │
