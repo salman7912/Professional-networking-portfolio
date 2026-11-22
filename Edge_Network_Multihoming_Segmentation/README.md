@@ -3,7 +3,7 @@
 
 A Cisco Packet Tracer lab of a dual-ISP service-provider edge. Two ISPs connect over eBGP to two edge routers, traffic passes a firewall router into a routed core, and two multilayer switches provide HSRP gateways for eight segmented VLANs (residential, business, VoIP, gaming, IoT, guest, servers and two customer networks). Access between segments is controlled with per-VLAN extended ACLs.
 
-![Topology](Topology/Topology.png)
+![Topology](Diagrams/Network-Topology.png)
 
 ## Goals
 
