@@ -2,13 +2,9 @@
 
 | File | Description |
 |------|-------------|
-| `Edge-Network.pkt` | Cisco Packet Tracer lab file (open with Packet Tracer 8.x) |
-| `Topology.png` | Physical and logical topology |
-| `Infographic.png` | Feature overview (BGP, OSPF, HSRP, NAT, VLAN, ACL) |
+| `Edge-Network.pkt` | Cisco Packet Tracer lab file|
+| `Network-Topology.png` | Physical and logical topology |
 
-## Topology
-
-![Topology](Diagrams/Network-Topology.png)
 
 ## How to open the lab
 
