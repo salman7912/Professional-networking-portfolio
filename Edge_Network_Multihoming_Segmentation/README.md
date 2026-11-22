@@ -187,3 +187,12 @@ Edge_Network_Multihoming_Segmentation/
 ## Technologies
 
 Cisco Packet Tracer, eBGP, OSPF, ECMP, HSRP, Rapid-PVST, LACP EtherChannel, NAT/PAT, VLAN and trunking, extended ACLs, DHCP relay, DNS, Syslog, SNMP, SSH
+
+## 👤 Author
+
+**Md. Salman Farsi** - [GitHub](https://github.com/salman7912/Professional-networking-portfolio)
+
+## Project Status
+
+In Progress
+
