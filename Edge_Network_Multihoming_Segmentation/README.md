@@ -80,7 +80,7 @@ A Cisco Packet Tracer lab of a dual-ISP service-provider edge. Two ISPs connect 
 | Admin PC | 10.10.50.20 | The only host allowed to manage devices |
 | Servers switch | 10.10.50.27 | Management address |
 
-Point-to-point links, router IDs and DHCP pools are listed in [IP_Addressing.md](IP_Addressing.md).
+Point-to-point links, router IDs and DHCP pools are listed in [IP_Addressing.md](Docs/IP_Addressing.md).
 
 ## Security design
 
