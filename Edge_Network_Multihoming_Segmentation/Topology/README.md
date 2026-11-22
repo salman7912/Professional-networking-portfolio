@@ -8,7 +8,7 @@
 
 ## Topology
 
-![Topology](Topology.png)
+![Topology](Diagrams/Network-Topology.png)
 
 ## How to open the lab
 
