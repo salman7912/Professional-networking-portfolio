@@ -76,7 +76,7 @@ line con 0
 line aux 0
 !
 line vty 0 4
- password 7 679912
+ password 7 67991212
  login
 !
 end
