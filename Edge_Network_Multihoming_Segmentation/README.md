@@ -178,16 +178,13 @@ Results are tracked in [Docs/Test_Plan.md](Docs/Test_Plan.md), and every command
 ```
 edge-network-multihoming-segmentation/
 ├── README.md
-├── LICENSE
-├── .gitignore
-│
 ├── Topology/
-│   ├── Edge-Network.pkt          (Packet Tracer file, Ctrl+S kore)
+│   ├── Edge-Network.pkt        
 │   ├── Topology.png
 │   └── Infographic.png
 │
 ├── Diagrams/
-│   └── (logical / HSRP / BGP diagram thakle)
+│   └── (logical / HSRP / BGP)
 │
 ├── Configs/
 │   ├── ISP-1.txt
@@ -201,7 +198,7 @@ edge-network-multihoming-segmentation/
 │   ├── MLS-2.txt
 │   ├── MLS-ACL.txt
 │   ├── Access-Switches.txt       (Switch-1..6)
-│   ├── Servers-Switch.txt        (Switch-7, SSH shoho)
+│   ├── Servers-Switch.txt        (Switch-7, SSH)
 │   └── Customer-Switch.txt
 │
 ├── Docs/
