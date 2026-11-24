@@ -1,6 +1,6 @@
 # Configs
 
-Sanitized configuration of every device in the lab. Each `.txt` file is the `show running-config` of one device, with `enable secret` and `password 7` values replaced by `salman@67912`. Replace them with your own before you paste a file into a device.
+Sanitized configuration of every device in the lab. Each `.txt` file is the `show running-config` of one device, with `enable secret` and `password 7` values replaced by `679912`. Replace them with your own before you paste a file into a device.
 
 ## Files
 
