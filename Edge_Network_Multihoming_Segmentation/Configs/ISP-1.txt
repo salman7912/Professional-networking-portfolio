@@ -1,5 +1,5 @@
 ! ISP-1 (AS 100)
-! Secrets are replaced with <removed>.
+! Secrets are replaced with salman@67912.
 !
 version 12.2
 no service timestamps log datetime msec
