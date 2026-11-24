@@ -1,0 +1,382 @@
+! MLS-1 (HSRP active for VLAN 10, 30, 50, 70, 100)
+! Secrets are replaced with salman@67912.
+!
+version 12.2(37)SE1
+service timestamps log datetime msec
+no service timestamps debug datetime msec
+service password-encryption
+!
+hostname MLS-1
+!
+no profinet
+enable secret 5 salman@67912
+!
+ip routing
+!
+no ip domain-lookup
+!
+vtp mode transparent
+!
+spanning-tree mode rapid-pvst
+spanning-tree vlan 10,30,50,70,100 priority 4096
+spanning-tree vlan 20,40,60,200 priority 8192
+!
+vlan 10
+ name Residential
+!
+vlan 20
+ name Business
+!
+vlan 30
+ name VoIP
+!
+vlan 40
+ name Gaming
+!
+vlan 50
+ name IoT
+!
+vlan 60
+ name Guest-WiFi
+!
+vlan 70
+ name Servers-Mgmt
+!
+vlan 100
+ name Customer-A
+!
+vlan 200
+ name Customer-B
+!
+interface Port-channel1
+ description L3-BACKUP-TO-MLS-2
+ no switchport
+ ip address 10.0.8.1 255.255.255.252
+!
+interface FastEthernet0/1
+ description To Switch-1 to 6 Fa0/1 to Fa0/6
+ switchport trunk allowed vlan 10,20,30,40,50,60,70
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+!
+interface FastEthernet0/2
+ description To Switch-1 to 6 Fa0/1 to Fa0/6
+ switchport trunk allowed vlan 10,20,30,40,50,60,70
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+!
+interface FastEthernet0/3
+ description To Switch-1 to 6 Fa0/1 to Fa0/6
+ switchport trunk allowed vlan 10,20,30,40,50,60,70
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+!
+interface FastEthernet0/4
+ description To Switch-1 to 6 Fa0/1 to Fa0/6
+ switchport trunk allowed vlan 10,20,30,40,50,60,70
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+!
+interface FastEthernet0/5
+ description To Switch-1 to 6 Fa0/1 to Fa0/6
+ switchport trunk allowed vlan 10,20,30,40,50,60,70
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+!
+interface FastEthernet0/6
+ description To Switch-1 to 6 Fa0/1 to Fa0/6
+ switchport trunk allowed vlan 10,20,30,40,50,60,70
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+!
+interface FastEthernet0/7
+ description To Core-Router-1 Fa2/0
+ no switchport
+ ip address 10.0.6.2 255.255.255.252
+ duplex auto
+ speed auto
+!
+interface FastEthernet0/20
+ description EtherChannel to MLS-2 Fa0/20-22
+ no switchport
+ no ip address
+ channel-group 1 mode active
+ duplex auto
+ speed auto
+!
+interface FastEthernet0/21
+ description EtherChannel to MLS-2 Fa0/20-22
+ no switchport
+ no ip address
+ channel-group 1 mode active
+ duplex auto
+ speed auto
+!
+interface FastEthernet0/22
+ description EtherChannel to MLS-2 Fa0/20-22
+ no switchport
+ no ip address
+ channel-group 1 mode active
+ duplex auto
+ speed auto
+!
+interface FastEthernet0/23
+ switchport trunk allowed vlan 100,200
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+!
+interface FastEthernet0/24
+!
+interface GigabitEthernet0/1
+ no switchport
+ no ip address
+ duplex auto
+ speed auto
+!
+interface GigabitEthernet0/2
+ description To Switch-7 Gig0/2
+ switchport trunk allowed vlan 70
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+!
+interface Vlan1
+ no ip address
+ shutdown
+!
+interface Vlan10
+ description Residential gateway
+ mac-address 0006.2a57.7601
+ ip address 192.168.10.2 255.255.255.0
+ ip helper-address 10.10.50.12
+ ip access-group RES-IN in
+ standby 10 ip 192.168.10.1
+ standby 10 priority 110
+ standby 10 preempt
+!
+interface Vlan20
+ description Business gateway
+ mac-address 0006.2a57.7602
+ ip address 192.168.20.2 255.255.255.0
+ ip helper-address 10.10.50.12
+ ip access-group BIZ-IN in
+ standby 20 ip 192.168.20.1
+ standby 20 preempt
+!
+interface Vlan30
+ description VoIP gateway
+ mac-address 0006.2a57.7603
+ ip address 192.168.30.2 255.255.255.0
+ ip helper-address 10.10.50.12
+ ip access-group VOIP-IN in
+ standby 30 ip 192.168.30.1
+ standby 30 priority 110
+ standby 30 preempt
+!
+interface Vlan40
+ description Gaming gateway
+ mac-address 0006.2a57.7604
+ ip address 192.168.40.2 255.255.255.0
+ ip helper-address 10.10.50.12
+ ip access-group GAME-IN in
+ standby 40 ip 192.168.40.1
+ standby 40 preempt
+!
+interface Vlan50
+ description IoT gateway
+ mac-address 0006.2a57.7605
+ ip address 192.168.50.2 255.255.255.0
+ ip helper-address 10.10.50.12
+ ip access-group IOT-IN in
+ standby 50 ip 192.168.50.1
+ standby 50 priority 110
+ standby 50 preempt
+!
+interface Vlan60
+ description Guest-WiFi gateway
+ mac-address 0006.2a57.7606
+ ip address 192.168.60.2 255.255.255.0
+ ip helper-address 10.10.50.12
+ ip access-group GUEST-IN in
+ standby 60 ip 192.168.60.1
+ standby 60 preempt
+!
+interface Vlan70
+ description Servers-Mgmt gateway
+ mac-address 0006.2a57.7607
+ ip address 10.10.50.2 255.255.255.0
+ ip access-group SERVER-IN in
+ standby 70 ip 10.10.50.1
+ standby 70 priority 110
+ standby 70 preempt
+!
+interface Vlan100
+ description Customer-A gateway
+ mac-address 0006.2a57.7608
+ ip address 192.168.100.2 255.255.255.0
+ ip helper-address 10.10.50.12
+ ip access-group CUSTA-IN in
+ standby 100 ip 192.168.100.1
+ standby 100 priority 110
+ standby 100 preempt
+!
+interface Vlan200
+ description Customer-B gateway
+ mac-address 0006.2a57.7609
+ ip address 192.168.200.2 255.255.255.0
+ ip helper-address 10.10.50.12
+ ip access-group CUSTB-IN in
+ standby 200 ip 192.168.200.1
+ standby 200 preempt
+!
+router ospf 1
+ router-id 6.6.6.6
+ log-adjacency-changes
+ passive-interface Vlan10
+ passive-interface Vlan20
+ passive-interface Vlan30
+ passive-interface Vlan40
+ passive-interface Vlan50
+ passive-interface Vlan60
+ passive-interface Vlan70
+ passive-interface Vlan100
+ passive-interface Vlan200
+ network 10.0.6.0 0.0.0.3 area 0
+ network 10.0.8.0 0.0.0.3 area 0
+ network 192.168.10.0 0.0.0.255 area 0
+ network 192.168.20.0 0.0.0.255 area 0
+ network 192.168.30.0 0.0.0.255 area 0
+ network 192.168.40.0 0.0.0.255 area 0
+ network 192.168.50.0 0.0.0.255 area 0
+ network 192.168.60.0 0.0.0.255 area 0
+ network 10.10.50.0 0.0.0.255 area 0
+ network 192.168.100.0 0.0.0.255 area 0
+ network 192.168.200.0 0.0.0.255 area 0
+!
+ip classless
+!
+ip flow-export version 9
+!
+ip access-list extended RES-IN
+ permit udp any eq bootpc any eq bootps
+ permit udp 192.168.10.0 0.0.0.255 host 10.10.50.12 eq domain
+ permit tcp 192.168.10.0 0.0.0.255 host 10.10.50.12 eq domain
+ permit icmp 192.168.10.0 0.0.0.255 host 10.10.50.12 echo
+ permit icmp 192.168.10.0 0.0.0.255 host 192.168.10.1 echo
+ permit icmp 192.168.10.0 0.0.0.255 host 10.10.50.20 echo-reply
+ permit icmp 192.168.10.0 0.0.0.255 host 10.10.50.11 echo-reply
+ permit tcp 192.168.10.0 0.0.0.255 host 10.10.50.20 established
+ permit udp 192.168.10.0 0.0.0.255 eq snmp host 10.10.50.11
+ deny ip 192.168.10.0 0.0.0.255 10.0.0.0 0.255.255.255
+ deny ip 192.168.10.0 0.0.0.255 172.16.0.0 0.15.255.255
+ deny ip 192.168.10.0 0.0.0.255 192.168.0.0 0.0.255.255
+ permit ip 192.168.10.0 0.0.0.255 any
+ip access-list extended BIZ-IN
+ permit udp any eq bootpc any eq bootps
+ permit udp 192.168.20.0 0.0.0.255 host 10.10.50.12 eq domain
+ permit tcp 192.168.20.0 0.0.0.255 host 10.10.50.12 eq domain
+ permit icmp 192.168.20.0 0.0.0.255 host 10.10.50.12 echo
+ permit icmp 192.168.20.0 0.0.0.255 host 192.168.20.1 echo
+ permit icmp 192.168.20.0 0.0.0.255 host 10.10.50.20 echo-reply
+ permit icmp 192.168.20.0 0.0.0.255 host 10.10.50.11 echo-reply
+ permit tcp 192.168.20.0 0.0.0.255 host 10.10.50.20 established
+ permit udp 192.168.20.0 0.0.0.255 eq snmp host 10.10.50.11
+ deny ip 192.168.20.0 0.0.0.255 10.0.0.0 0.255.255.255
+ deny ip 192.168.20.0 0.0.0.255 172.16.0.0 0.15.255.255
+ deny ip 192.168.20.0 0.0.0.255 192.168.0.0 0.0.255.255
+ permit ip 192.168.20.0 0.0.0.255 any
+ip access-list extended VOIP-IN
+ permit udp any eq bootpc any eq bootps
+ permit udp 192.168.30.0 0.0.0.255 host 10.10.50.12 eq domain
+ permit tcp 192.168.30.0 0.0.0.255 host 10.10.50.12 eq domain
+ permit icmp 192.168.30.0 0.0.0.255 host 10.10.50.12 echo
+ permit icmp 192.168.30.0 0.0.0.255 host 192.168.30.1 echo
+ permit icmp 192.168.30.0 0.0.0.255 host 10.10.50.20 echo-reply
+ permit icmp 192.168.30.0 0.0.0.255 host 10.10.50.11 echo-reply
+ permit tcp 192.168.30.0 0.0.0.255 host 10.10.50.20 established
+ permit udp 192.168.30.0 0.0.0.255 eq snmp host 10.10.50.11
+ deny ip 192.168.30.0 0.0.0.255 10.0.0.0 0.255.255.255
+ deny ip 192.168.30.0 0.0.0.255 172.16.0.0 0.15.255.255
+ deny ip 192.168.30.0 0.0.0.255 192.168.0.0 0.0.255.255
+ permit ip 192.168.30.0 0.0.0.255 any
+ip access-list extended GAME-IN
+ permit udp any eq bootpc any eq bootps
+ permit udp 192.168.40.0 0.0.0.255 host 10.10.50.12 eq domain
+ permit tcp 192.168.40.0 0.0.0.255 host 10.10.50.12 eq domain
+ permit icmp 192.168.40.0 0.0.0.255 host 10.10.50.12 echo
+ permit icmp 192.168.40.0 0.0.0.255 host 192.168.40.1 echo
+ permit icmp 192.168.40.0 0.0.0.255 host 10.10.50.20 echo-reply
+ permit icmp 192.168.40.0 0.0.0.255 host 10.10.50.11 echo-reply
+ permit tcp 192.168.40.0 0.0.0.255 host 10.10.50.20 established
+ permit udp 192.168.40.0 0.0.0.255 eq snmp host 10.10.50.11
+ deny ip 192.168.40.0 0.0.0.255 10.0.0.0 0.255.255.255
+ deny ip 192.168.40.0 0.0.0.255 172.16.0.0 0.15.255.255
+ deny ip 192.168.40.0 0.0.0.255 192.168.0.0 0.0.255.255
+ permit ip 192.168.40.0 0.0.0.255 any
+ip access-list extended IOT-IN
+ permit udp any eq bootpc any eq bootps
+ permit udp 192.168.50.0 0.0.0.255 host 10.10.50.12 eq domain
+ permit tcp 192.168.50.0 0.0.0.255 host 10.10.50.12 eq domain
+ permit icmp 192.168.50.0 0.0.0.255 host 192.168.50.1 echo
+ permit icmp 192.168.50.0 0.0.0.255 host 10.10.50.20 echo-reply
+ permit icmp 192.168.50.0 0.0.0.255 host 10.10.50.11 echo-reply
+ permit tcp 192.168.50.0 0.0.0.255 host 10.10.50.20 established
+ permit udp 192.168.50.0 0.0.0.255 eq snmp host 10.10.50.11
+ deny ip 192.168.50.0 0.0.0.255 10.0.0.0 0.255.255.255
+ deny ip 192.168.50.0 0.0.0.255 172.16.0.0 0.15.255.255
+ deny ip 192.168.50.0 0.0.0.255 192.168.0.0 0.0.255.255
+ permit ip 192.168.50.0 0.0.0.255 any
+ip access-list extended GUEST-IN
+ permit udp any eq bootpc any eq bootps
+ permit udp 192.168.60.0 0.0.0.255 host 10.10.50.12 eq domain
+ permit tcp 192.168.60.0 0.0.0.255 host 10.10.50.12 eq domain
+ permit icmp 192.168.60.0 0.0.0.255 host 192.168.60.1 echo
+ deny ip 192.168.60.0 0.0.0.255 10.0.0.0 0.255.255.255
+ deny ip 192.168.60.0 0.0.0.255 172.16.0.0 0.15.255.255
+ deny ip 192.168.60.0 0.0.0.255 192.168.0.0 0.0.255.255
+ permit ip 192.168.60.0 0.0.0.255 any
+ip access-list extended CUSTA-IN
+ permit udp any eq bootpc any eq bootps
+ permit udp 192.168.100.0 0.0.0.255 host 10.10.50.12 eq domain
+ permit tcp 192.168.100.0 0.0.0.255 host 10.10.50.12 eq domain
+ permit icmp 192.168.100.0 0.0.0.255 host 192.168.100.1 echo
+ deny ip 192.168.100.0 0.0.0.255 10.0.0.0 0.255.255.255
+ deny ip 192.168.100.0 0.0.0.255 172.16.0.0 0.15.255.255
+ deny ip 192.168.100.0 0.0.0.255 192.168.0.0 0.0.255.255
+ permit ip 192.168.100.0 0.0.0.255 any
+ip access-list extended CUSTB-IN
+ permit udp any eq bootpc any eq bootps
+ permit udp 192.168.200.0 0.0.0.255 host 10.10.50.12 eq domain
+ permit tcp 192.168.200.0 0.0.0.255 host 10.10.50.12 eq domain
+ permit icmp 192.168.200.0 0.0.0.255 host 192.168.200.1 echo
+ deny ip 192.168.200.0 0.0.0.255 10.0.0.0 0.255.255.255
+ deny ip 192.168.200.0 0.0.0.255 172.16.0.0 0.15.255.255
+ deny ip 192.168.200.0 0.0.0.255 192.168.0.0 0.0.255.255
+ permit ip 192.168.200.0 0.0.0.255 any
+ip access-list extended SERVER-IN
+ permit udp 10.10.50.0 0.0.0.255 host 224.0.0.2 eq 1985
+ permit ip host 10.10.50.20 any
+ permit udp host 10.10.50.11 any eq snmp
+ permit icmp host 10.10.50.11 any echo
+ permit udp host 10.10.50.12 eq bootps 192.168.0.0 0.0.255.255 eq bootps
+ permit udp host 10.10.50.12 eq bootps 192.168.0.0 0.0.255.255 eq bootpc
+ permit udp host 10.10.50.12 eq domain 192.168.0.0 0.0.255.255
+ permit tcp host 10.10.50.12 eq domain 192.168.0.0 0.0.255.255
+ permit udp host 10.10.50.12 any eq domain
+ permit tcp host 10.10.50.12 any eq domain
+ permit icmp 10.10.50.0 0.0.0.255 any echo-reply
+ permit icmp 10.10.50.0 0.0.0.255 host 10.10.50.1 echo
+ deny ip any any
+!
+snmp-server community public RO
+!
+logging 10.10.50.10
+line con 0
+ logging synchronous
+!
+line aux 0
+!
+line vty 0 4
+ password 7 67991212
+ login
+!
+end
