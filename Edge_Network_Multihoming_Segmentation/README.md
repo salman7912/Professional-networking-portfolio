@@ -176,12 +176,43 @@ Results are tracked in [Docs/Test_Plan.md](Docs/Test_Plan.md), and every command
 ## Repository layout
 
 ```
-Edge_Network_Multihoming_Segmentation/
+edge-network-multihoming-segmentation/
 ├── README.md
-├── Topology/        Packet Tracer file, topology and infographic images
-├── Configs/         Sanitized configuration of every device, plus MLS-ACL.txt
-├── Docs/            IP plan, test plan, verification commands
-└── Screenshots/     Test evidence (ping-tests, acl-matches, ospf-bgp-hsrp)
+├── LICENSE
+├── .gitignore
+│
+├── Topology/
+│   ├── Edge-Network.pkt          (Packet Tracer file, Ctrl+S kore)
+│   ├── Topology.png
+│   └── Infographic.png
+│
+├── Diagrams/
+│   └── (logical / HSRP / BGP diagram thakle)
+│
+├── Configs/
+│   ├── ISP-1.txt
+│   ├── ISP-2.txt
+│   ├── Edge-Router-1.txt
+│   ├── Edge-Router-2.txt
+│   ├── Firewall-Router.txt
+│   ├── Core-Router-1.txt
+│   ├── Core-Router-2.txt
+│   ├── MLS-1.txt
+│   ├── MLS-2.txt
+│   ├── MLS-ACL.txt
+│   ├── Access-Switches.txt       (Switch-1..6)
+│   ├── Servers-Switch.txt        (Switch-7, SSH shoho)
+│   └── Customer-Switch.txt
+│
+├── Docs/
+│   ├── IP_Addressing.md
+│   ├── Test_Plan.md
+│   └── Verification_Commands.md
+│
+└── Screenshots/
+    ├── ping-tests/
+    ├── acl-matches/
+    └── ospf-bgp-hsrp/
 ```
 
 ## Technologies
