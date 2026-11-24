@@ -1,0 +1,179 @@
+! ============================================================
+! MLS-1 and MLS-2: access control lists (paste on BOTH switches)
+! ============================================================
+!
+! POLICY
+!  - ACLs sit inbound on each VLAN interface (closest to the source).
+!  - Users get: DHCP, DNS, ping to own gateway, Internet.
+!  - Users never reach: other VLANs, servers (except DNS/DHCP), network devices.
+!  - Only the user's own subnet may be a source (anti-spoofing, last permit line).
+!  - Admin PC (10.10.50.20) and NMS (10.10.50.11) may reach/monitor user VLANs.
+!  - Guest, Customer A and Customer B are Internet-only (no admin/NMS access).
+!  - Servers VLAN: replies only, no Internet except Admin PC and DNS forwarding.
+!
+! BEFORE YOU PASTE
+!  1. show standby brief       (VIP of VLAN 100 and 200 must be .1)
+!  2. show running-config interface vlan 70
+!
+! STEP 1: create new ACLs
+!
+! VLAN 10 Residential
+ip access-list extended RES-IN
+ permit udp any eq bootpc any eq bootps
+ permit udp 192.168.10.0 0.0.0.255 host 10.10.50.12 eq domain
+ permit tcp 192.168.10.0 0.0.0.255 host 10.10.50.12 eq domain
+ permit icmp 192.168.10.0 0.0.0.255 host 10.10.50.12 echo
+ permit icmp 192.168.10.0 0.0.0.255 host 192.168.10.1 echo
+ permit icmp 192.168.10.0 0.0.0.255 host 10.10.50.20 echo-reply
+ permit icmp 192.168.10.0 0.0.0.255 host 10.10.50.11 echo-reply
+ permit tcp 192.168.10.0 0.0.0.255 host 10.10.50.20 established
+ permit udp 192.168.10.0 0.0.0.255 eq snmp host 10.10.50.11
+ deny ip 192.168.10.0 0.0.0.255 10.0.0.0 0.255.255.255
+ deny ip 192.168.10.0 0.0.0.255 172.16.0.0 0.15.255.255
+ deny ip 192.168.10.0 0.0.0.255 192.168.0.0 0.0.255.255
+ permit ip 192.168.10.0 0.0.0.255 any
+ exit
+! VLAN 20 Business
+ip access-list extended BIZ-IN
+ permit udp any eq bootpc any eq bootps
+ permit udp 192.168.20.0 0.0.0.255 host 10.10.50.12 eq domain
+ permit tcp 192.168.20.0 0.0.0.255 host 10.10.50.12 eq domain
+ permit icmp 192.168.20.0 0.0.0.255 host 10.10.50.12 echo
+ permit icmp 192.168.20.0 0.0.0.255 host 192.168.20.1 echo
+ permit icmp 192.168.20.0 0.0.0.255 host 10.10.50.20 echo-reply
+ permit icmp 192.168.20.0 0.0.0.255 host 10.10.50.11 echo-reply
+ permit tcp 192.168.20.0 0.0.0.255 host 10.10.50.20 established
+ permit udp 192.168.20.0 0.0.0.255 eq snmp host 10.10.50.11
+ deny ip 192.168.20.0 0.0.0.255 10.0.0.0 0.255.255.255
+ deny ip 192.168.20.0 0.0.0.255 172.16.0.0 0.15.255.255
+ deny ip 192.168.20.0 0.0.0.255 192.168.0.0 0.0.255.255
+ permit ip 192.168.20.0 0.0.0.255 any
+ exit
+! VLAN 30 VoIP
+ip access-list extended VOIP-IN
+ permit udp any eq bootpc any eq bootps
+ permit udp 192.168.30.0 0.0.0.255 host 10.10.50.12 eq domain
+ permit tcp 192.168.30.0 0.0.0.255 host 10.10.50.12 eq domain
+ permit icmp 192.168.30.0 0.0.0.255 host 10.10.50.12 echo
+ permit icmp 192.168.30.0 0.0.0.255 host 192.168.30.1 echo
+ permit icmp 192.168.30.0 0.0.0.255 host 10.10.50.20 echo-reply
+ permit icmp 192.168.30.0 0.0.0.255 host 10.10.50.11 echo-reply
+ permit tcp 192.168.30.0 0.0.0.255 host 10.10.50.20 established
+ permit udp 192.168.30.0 0.0.0.255 eq snmp host 10.10.50.11
+ deny ip 192.168.30.0 0.0.0.255 10.0.0.0 0.255.255.255
+ deny ip 192.168.30.0 0.0.0.255 172.16.0.0 0.15.255.255
+ deny ip 192.168.30.0 0.0.0.255 192.168.0.0 0.0.255.255
+ permit ip 192.168.30.0 0.0.0.255 any
+ exit
+! VLAN 40 Gaming
+ip access-list extended GAME-IN
+ permit udp any eq bootpc any eq bootps
+ permit udp 192.168.40.0 0.0.0.255 host 10.10.50.12 eq domain
+ permit tcp 192.168.40.0 0.0.0.255 host 10.10.50.12 eq domain
+ permit icmp 192.168.40.0 0.0.0.255 host 10.10.50.12 echo
+ permit icmp 192.168.40.0 0.0.0.255 host 192.168.40.1 echo
+ permit icmp 192.168.40.0 0.0.0.255 host 10.10.50.20 echo-reply
+ permit icmp 192.168.40.0 0.0.0.255 host 10.10.50.11 echo-reply
+ permit tcp 192.168.40.0 0.0.0.255 host 10.10.50.20 established
+ permit udp 192.168.40.0 0.0.0.255 eq snmp host 10.10.50.11
+ deny ip 192.168.40.0 0.0.0.255 10.0.0.0 0.255.255.255
+ deny ip 192.168.40.0 0.0.0.255 172.16.0.0 0.15.255.255
+ deny ip 192.168.40.0 0.0.0.255 192.168.0.0 0.0.255.255
+ permit ip 192.168.40.0 0.0.0.255 any
+ exit
+! VLAN 50 IoT
+ip access-list extended IOT-IN
+ permit udp any eq bootpc any eq bootps
+ permit udp 192.168.50.0 0.0.0.255 host 10.10.50.12 eq domain
+ permit tcp 192.168.50.0 0.0.0.255 host 10.10.50.12 eq domain
+ permit icmp 192.168.50.0 0.0.0.255 host 192.168.50.1 echo
+ permit icmp 192.168.50.0 0.0.0.255 host 10.10.50.20 echo-reply
+ permit icmp 192.168.50.0 0.0.0.255 host 10.10.50.11 echo-reply
+ permit tcp 192.168.50.0 0.0.0.255 host 10.10.50.20 established
+ permit udp 192.168.50.0 0.0.0.255 eq snmp host 10.10.50.11
+ deny ip 192.168.50.0 0.0.0.255 10.0.0.0 0.255.255.255
+ deny ip 192.168.50.0 0.0.0.255 172.16.0.0 0.15.255.255
+ deny ip 192.168.50.0 0.0.0.255 192.168.0.0 0.0.255.255
+ permit ip 192.168.50.0 0.0.0.255 any
+ exit
+! VLAN 60 Guest-WiFi
+ip access-list extended GUEST-IN
+ permit udp any eq bootpc any eq bootps
+ permit udp 192.168.60.0 0.0.0.255 host 10.10.50.12 eq domain
+ permit tcp 192.168.60.0 0.0.0.255 host 10.10.50.12 eq domain
+ permit icmp 192.168.60.0 0.0.0.255 host 192.168.60.1 echo
+ deny ip 192.168.60.0 0.0.0.255 10.0.0.0 0.255.255.255
+ deny ip 192.168.60.0 0.0.0.255 172.16.0.0 0.15.255.255
+ deny ip 192.168.60.0 0.0.0.255 192.168.0.0 0.0.255.255
+ permit ip 192.168.60.0 0.0.0.255 any
+ exit
+! VLAN 100 Customer-A
+ip access-list extended CUSTA-IN
+ permit udp any eq bootpc any eq bootps
+ permit udp 192.168.100.0 0.0.0.255 host 10.10.50.12 eq domain
+ permit tcp 192.168.100.0 0.0.0.255 host 10.10.50.12 eq domain
+ permit icmp 192.168.100.0 0.0.0.255 host 192.168.100.1 echo
+ deny ip 192.168.100.0 0.0.0.255 10.0.0.0 0.255.255.255
+ deny ip 192.168.100.0 0.0.0.255 172.16.0.0 0.15.255.255
+ deny ip 192.168.100.0 0.0.0.255 192.168.0.0 0.0.255.255
+ permit ip 192.168.100.0 0.0.0.255 any
+ exit
+! VLAN 200 Customer-B
+ip access-list extended CUSTB-IN
+ permit udp any eq bootpc any eq bootps
+ permit udp 192.168.200.0 0.0.0.255 host 10.10.50.12 eq domain
+ permit tcp 192.168.200.0 0.0.0.255 host 10.10.50.12 eq domain
+ permit icmp 192.168.200.0 0.0.0.255 host 192.168.200.1 echo
+ deny ip 192.168.200.0 0.0.0.255 10.0.0.0 0.255.255.255
+ deny ip 192.168.200.0 0.0.0.255 172.16.0.0 0.15.255.255
+ deny ip 192.168.200.0 0.0.0.255 192.168.0.0 0.0.255.255
+ permit ip 192.168.200.0 0.0.0.255 any
+ exit
+! VLAN 70 Servers (HSRP hello must stay permitted, otherwise both MLS go active)
+ip access-list extended SERVER-IN
+ permit udp 10.10.50.0 0.0.0.255 host 224.0.0.2 eq 1985
+ permit ip host 10.10.50.20 any
+ permit udp host 10.10.50.11 any eq snmp
+ permit icmp host 10.10.50.11 any echo
+ permit udp host 10.10.50.12 eq bootps 192.168.0.0 0.0.255.255 eq bootps
+ permit udp host 10.10.50.12 eq bootps 192.168.0.0 0.0.255.255 eq bootpc
+ permit udp host 10.10.50.12 eq domain 192.168.0.0 0.0.255.255
+ permit tcp host 10.10.50.12 eq domain 192.168.0.0 0.0.255.255
+ permit udp host 10.10.50.12 any eq domain
+ permit tcp host 10.10.50.12 any eq domain
+ permit icmp 10.10.50.0 0.0.0.255 any echo-reply
+ permit icmp 10.10.50.0 0.0.0.255 host 10.10.50.1 echo
+ deny ip any any
+ exit
+!
+! STEP 2: apply inbound
+!
+interface vlan 10
+ ip access-group RES-IN in
+interface vlan 20
+ ip access-group BIZ-IN in
+interface vlan 30
+ ip access-group VOIP-IN in
+interface vlan 40
+ ip access-group GAME-IN in
+interface vlan 50
+ ip access-group IOT-IN in
+interface vlan 60
+ ip access-group GUEST-IN in
+interface vlan 100
+ ip access-group CUSTA-IN in
+interface vlan 200
+ ip access-group CUSTB-IN in
+interface vlan 70
+ ip access-group SERVER-IN in
+end
+write memory
+!
+! ROLLBACK (if something breaks, run in config mode)
+!  interface vlan 70
+!   no ip access-group SERVER-IN in
+!  interface vlan 10
+!   no ip access-group RES-IN in
+!  (same for vlan 20, 30, 40, 50, 60, 100, 200)
+!
+! NOTE: 'log' keyword is not used because Packet Tracer rejects the whole line.
