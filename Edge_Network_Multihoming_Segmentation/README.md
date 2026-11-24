@@ -180,12 +180,12 @@ edge-network-multihoming-segmentation/
 ├── README.md
 ├── Topology/
 │   ├── Edge-Network.pkt        
-│   ├── Topology.png
-│   └── Infographic.png
+│   ├── README.md
 │
 ├── Diagrams/
-│   └── (logical / HSRP / BGP)
-│
+│   └── ISP_Edge_Network_Infographic.png
+│   └── Network-Topology.png
+
 ├── Configs/
 │   ├── ISP-1.txt
 │   ├── ISP-2.txt
