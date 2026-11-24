@@ -1,0 +1,92 @@
+! Access switches - sanitized running-config
+! Secrets are replaced with salman@67912.
+! ============================================================
+! Switch-7 (Servers, VLAN 70, hostname "Servers")
+! ============================================================
+version 15.0
+service timestamps log datetime msec
+no service timestamps debug datetime msec
+service password-encryption
+!
+hostname Servers
+!
+enable secret 5 salman@67912
+!
+ip ssh version 2
+no ip domain-lookup
+ip domain-name lab.local
+!
+username admin secret 5 67991212
+!
+vtp mode transparent
+!
+spanning-tree mode rapid-pvst
+spanning-tree extend system-id
+!
+vlan 70
+ name Servers-Mgmt
+!
+interface FastEthernet0/1
+ description Servers: Fa0/1 Syslog, Fa0/2 DHCP+DNS, Fa0/3 NMS
+ switchport access vlan 70
+ switchport mode access
+ spanning-tree portfast
+!
+interface FastEthernet0/2
+ description Servers: Fa0/1 Syslog, Fa0/2 DHCP+DNS, Fa0/3 NMS
+ switchport access vlan 70
+ switchport mode access
+ spanning-tree portfast
+!
+interface FastEthernet0/3
+ description Servers: Fa0/1 Syslog, Fa0/2 DHCP+DNS, Fa0/3 NMS
+ switchport access vlan 70
+ switchport mode access
+ spanning-tree portfast
+!
+interface FastEthernet0/4
+ description Admin-PC
+ switchport access vlan 70
+ switchport mode access
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface range FastEthernet0/5 - 24
+ shutdown
+!
+interface GigabitEthernet0/1
+ description To MLS-2 Gig0/2
+ switchport trunk allowed vlan 70
+ switchport mode trunk
+!
+interface GigabitEthernet0/2
+ description To MLS-1 Gig0/2
+ switchport trunk allowed vlan 70
+ switchport mode trunk
+!
+interface Vlan1
+ no ip address
+ shutdown
+!
+interface Vlan70
+ description Management
+ ip address 10.10.50.27 255.255.255.0
+!
+ip default-gateway 10.10.50.1
+!
+logging 10.10.50.10
+!
+snmp-server community public RO
+!
+access-list 99 permit host 10.10.50.20
+line con 0
+ logging synchronous
+!
+line vty 0 4
+ access-class 99 in
+ login local
+line vty 5 15
+ access-class 99 in
+ login local
+!
+end
