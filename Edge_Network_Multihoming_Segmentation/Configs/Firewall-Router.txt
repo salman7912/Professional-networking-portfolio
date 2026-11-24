@@ -1,0 +1,79 @@
+! Firewall-Router
+! Secrets are replaced with salman@67912.
+!
+version 12.2
+service timestamps log datetime msec
+no service timestamps debug datetime msec
+service password-encryption
+!
+hostname Firewall-Router
+!
+enable secret 5 salman@67912
+!
+no ip cef
+no ipv6 cef
+!
+username admin secret 5 67991212
+!
+ip ssh version 2
+no ip domain-lookup
+ip domain-name lab.local
+!
+interface FastEthernet0/0
+ ip address 10.0.1.2 255.255.255.252
+ ip access-group FROM-EDGE in
+ duplex auto
+ speed auto
+!
+interface FastEthernet1/0
+ ip address 10.0.2.2 255.255.255.252
+ ip access-group FROM-EDGE in
+ duplex auto
+ speed auto
+!
+interface FastEthernet2/0
+ ip address 10.0.3.1 255.255.255.252
+ duplex auto
+ speed auto
+!
+interface FastEthernet3/0
+ ip address 10.0.4.1 255.255.255.252
+ duplex auto
+ speed auto
+!
+router ospf 1
+ router-id 3.3.3.3
+ log-adjacency-changes
+ network 10.0.1.0 0.0.0.3 area 0
+ network 10.0.2.0 0.0.0.3 area 0
+ network 10.0.3.0 0.0.0.3 area 0
+ network 10.0.4.0 0.0.0.3 area 0
+!
+ip classless
+!
+ip flow-export version 9
+!
+ip access-list extended FROM-EDGE
+ permit ospf any any
+ permit tcp any any established
+ permit icmp any any echo-reply
+ permit icmp any any unreachable
+ permit udp any eq domain any
+ permit udp 10.0.0.0 0.0.3.255 host 10.10.50.10 eq 514
+ permit udp any eq snmp host 10.10.50.11
+ deny ip any any
+access-list 99 permit host 10.10.50.20
+!
+snmp-server community public RO
+!
+logging 10.10.50.10
+line con 0
+ logging synchronous
+!
+line aux 0
+!
+line vty 0 4
+ access-class 99 in
+ login local
+!
+end
