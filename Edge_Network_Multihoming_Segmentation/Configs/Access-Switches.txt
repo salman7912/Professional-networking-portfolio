@@ -1,0 +1,93 @@
+! Access switches - sanitized running-config
+! Secrets are replaced with salman@67912.
+! Switch-1, Switch-7 and Switch-8 are real running-configs. Switch-2 to Switch-6 are pending (placeholders below).
+! Interfaces without any configuration are omitted, and shutdown ports are written as 'interface range'.
+!
+! ============================================================
+! Switch-1 (VLAN 10 Residential, hostname "Residential")
+! Management address 10.10.50.21. Uplinks: Fa0/1 to MLS-1, Fa0/6 to MLS-2.
+! ============================================================
+version 15.0
+service timestamps log datetime msec
+no service timestamps debug datetime msec
+service password-encryption
+!
+hostname Residential
+!
+enable secret 5salman@67912
+!
+ip ssh version 2
+no ip domain-lookup
+ip domain-name lab.local
+!
+username admin secret 5 67991212
+!
+vtp mode transparent
+!
+spanning-tree mode rapid-pvst
+spanning-tree extend system-id
+!
+vlan 10
+ name Residential
+!
+vlan 70
+ name Servers-Mgmt
+!
+interface FastEthernet0/1
+ description To MLS-1 Fa0/1
+ switchport trunk allowed vlan 10,70
+ switchport mode trunk
+!
+interface FastEthernet0/6
+ description To MLS-2 Fa0/6
+ switchport trunk allowed vlan 10,70
+ switchport mode trunk
+!
+interface FastEthernet0/20
+ description Access ports VLAN 10: PC1 (Fa0/21), Laptop-1 (Fa0/20)
+ switchport access vlan 10
+ switchport mode access
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface FastEthernet0/21
+ description Access ports VLAN 10: PC1 (Fa0/21), Laptop-1 (Fa0/20)
+ switchport access vlan 10
+ switchport mode access
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface range FastEthernet0/2 - 5 , FastEthernet0/7 - 19 , FastEthernet0/22 - 24
+ shutdown
+!
+interface range GigabitEthernet0/1 - 2
+ shutdown
+!
+interface Vlan1
+ no ip address
+ shutdown
+!
+interface Vlan70
+ description Management
+ ip address 10.10.50.21 255.255.255.0
+!
+ip default-gateway 10.10.50.1
+!
+logging 10.10.50.10
+!
+snmp-server community public RO
+!
+access-list 99 permit host 10.10.50.20
+line con 0
+ logging synchronous
+!
+line vty 0 4
+ access-class 99 in
+ login local
+line vty 5 15
+ access-class 99 in
+ login local
+!
+end
+!
+
